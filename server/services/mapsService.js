@@ -53,6 +53,10 @@ const getDistance = async (pickupCoords, destinationCoords) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
       throw new MapsServiceError('Routing API key is invalid or quota exceeded.', 502);
     }
+    
+    if (error.response?.status === 429) {
+      throw new MapsServiceError('Routing service is temporarily unavailable. Please try again later.', 502);
+    }
 
     throw new MapsServiceError('External routing service is currently unavailable.', 502);
   }
@@ -86,6 +90,11 @@ const getAutocomplete = async (text) => {
     }));
   } catch (error) {
     console.error('Geoapify Autocomplete error:', error?.response?.data || error.message);
+    
+    if (error.response?.status === 429) {
+      throw new MapsServiceError('Search service is temporarily unavailable. Please try again later.', 502);
+    }
+    
     throw new MapsServiceError('Search service unavailable', 502);
   }
 };
