@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const rateLimit = require('express-rate-limit');
 const FareReport = require('../models/FareReport');
 const { calculateFairFare } = require('../services/fareCalculator');
 const { getDistance, MapsServiceError } = require('../services/mapsService');
+
+// Dedicated rate limiter for autocomplete (30 requests / 15 min)
+const autocompleteLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: { error: 'Too many autocomplete requests from this IP, please try again after 15 minutes' }
+});
 
 // Middleware to check validation results
 const validate = (req, res, next) => {
@@ -105,7 +113,7 @@ router.post('/fares/estimate', [
 });
 
 // GET /api/fares/autocomplete - Location search
-router.get('/fares/autocomplete', async (req, res) => {
+router.get('/fares/autocomplete', autocompleteLimiter, async (req, res) => {
   try {
     const { text } = req.query;
     if (!text || text.length < 2) {
