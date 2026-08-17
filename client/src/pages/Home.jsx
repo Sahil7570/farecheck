@@ -78,16 +78,16 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-gray-50">
       {/* Header */}
-      <div className="px-6 pt-12 pb-6 bg-primary-600 text-white rounded-b-[2rem]">
+      <div className="px-6 pt-10 pb-12 bg-primary-600 text-white rounded-b-[2rem] shadow-sm">
         <h1 className="text-3xl font-bold tracking-tight">FareCheck</h1>
-        <p className="text-primary-100 mt-2 font-medium">Know the fair auto fare before you ride.</p>
+        <p className="text-primary-100 mt-1 font-medium text-sm">Know the fair auto fare before you ride.</p>
       </div>
 
-      <div className="px-6 py-8 flex-1">
+      <div className="px-5 -mt-6 flex-1 pb-8">
         {/* Search Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-8">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 mb-6">
           
           {errorMsg && (
             <div className="mb-4 p-3 bg-red-50 text-red-800 rounded-xl text-sm border border-red-100 font-medium">
@@ -192,12 +192,12 @@ export default function Home() {
 
         {/* Recent Routes */}
         {history.length > 0 && (
-          <div>
-            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center">
-              <History className="w-4 h-4 mr-2" />
+          <div className="px-1">
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center">
+              <History className="w-3.5 h-3.5 mr-1.5" />
               Recent Routes
             </h3>
-            <div className="space-y-3">
+            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden divide-y divide-gray-50">
               {history.map((item, i) => (
                 <div 
                   key={i} 
@@ -207,15 +207,13 @@ export default function Home() {
                     setDestination(item.destination);
                     setDestText(item.destination.name);
                   }}
-                  className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-primary-200 transition-colors"
+                  className="p-4 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors"
                 >
-                  <div className="flex justify-between items-center">
-                    <div className="flex-1 truncate pr-4">
-                      <div className="font-semibold text-gray-900 truncate">{item.pickup.name}</div>
-                      <div className="text-sm text-gray-500 flex items-center mt-0.5">
-                        <ArrowRight className="w-3 h-3 mx-1 text-gray-300 flex-shrink-0" />
-                        <span className="truncate">{item.destination.name}</span>
-                      </div>
+                  <div className="flex flex-col">
+                    <div className="font-bold text-gray-900 text-sm truncate">{item.pickup.name}</div>
+                    <div className="text-xs font-medium text-gray-500 flex items-center mt-0.5">
+                      <ArrowRight className="w-3 h-3 mx-1 text-gray-300 flex-shrink-0" />
+                      <span className="truncate">{item.destination.name}</span>
                     </div>
                   </div>
                 </div>

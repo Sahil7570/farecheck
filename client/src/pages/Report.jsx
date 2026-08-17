@@ -59,49 +59,53 @@ export default function Report() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col min-h-[100dvh] bg-gray-50">
       {/* Header */}
-      <div className="px-4 py-4 flex items-center border-b border-gray-100">
-        <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full hover:bg-gray-50 text-gray-700 transition-colors">
-          <ArrowLeft className="w-5 h-5" />
+      <div className="px-4 py-4 flex items-center bg-white sticky top-0 z-10 border-b border-gray-100 shadow-sm">
+        <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full active:bg-gray-100 hover:bg-gray-50 text-gray-700 transition-colors">
+          <ArrowLeft className="w-6 h-6" />
         </button>
-        <h1 className="ml-2 text-lg font-bold text-gray-900">Report Actual Fare</h1>
+        <h1 className="ml-2 text-[17px] font-bold text-gray-900 tracking-tight">Report Actual Fare</h1>
       </div>
 
-      <div className="p-6 flex-1">
+      <div className="p-5 flex-1 flex flex-col">
         <div className="mb-8">
-          <div className="text-sm font-semibold text-gray-400 mb-1">Route</div>
-          <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-            <div className="font-bold text-gray-900">{state.pickup.name}</div>
-            <div className="text-sm text-gray-500 mt-1">to <span className="font-semibold text-gray-700">{state.destination.name}</span></div>
+          <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">Route</div>
+          <div className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex flex-col">
+            <div className="font-bold text-gray-900 text-[15px] leading-tight truncate">{state.pickup.name}</div>
+            <div className="text-sm text-gray-500 mt-1 flex items-center font-medium">
+              to <span className="font-semibold text-gray-700 ml-1 truncate">{state.destination.name}</span>
+            </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
           <div className="mb-8">
-            <label className="block text-sm font-bold text-gray-900 mb-3">What did you actually pay?</label>
+            <label className="block text-sm font-bold text-gray-900 mb-4 px-1">What did you actually pay?</label>
             <div className="relative">
-              <span className="absolute left-4 top-4 text-gray-500 font-bold text-2xl">₹</span>
+              <span className="absolute left-5 top-[18px] text-gray-400 font-bold text-2xl">₹</span>
               <input
                 type="number"
                 pattern="[0-9]*"
                 autoFocus
-                className="w-full bg-gray-50 border-none rounded-2xl py-4 pl-10 pr-4 text-gray-900 focus:ring-2 focus:ring-primary-500 font-bold text-3xl transition-all"
+                className="w-full bg-white border border-gray-100 shadow-sm rounded-[2rem] py-5 pl-12 pr-6 text-gray-900 focus:ring-2 focus:border-transparent focus:ring-primary-500 font-black text-4xl transition-all"
                 placeholder="0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </div>
-            {error && <p className="text-red-500 text-sm font-medium mt-2">{error}</p>}
+            {error && <p className="text-red-500 text-sm font-semibold mt-3 px-2 flex items-center"><ArrowLeft className="w-4 h-4 mr-1 inline" /> {error}</p>}
           </div>
 
-          <button 
-            type="submit"
-            disabled={loading || !amount}
-            className="w-full bg-gray-900 text-white font-bold py-4 rounded-xl shadow-md hover:bg-gray-800 transition-colors flex items-center justify-center text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Submitting...' : 'Submit Fare'}
-          </button>
+          <div className="mt-auto pb-6 pt-4">
+            <button 
+              type="submit"
+              disabled={loading || !amount}
+              className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl shadow-xl shadow-gray-900/10 active:scale-[0.98] transition-transform flex items-center justify-center text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Submitting...' : 'Submit Fare'}
+            </button>
+          </div>
         </form>
       </div>
     </div>

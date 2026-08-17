@@ -91,38 +91,38 @@ export default function Result() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 pb-24">
+    <div className="flex flex-col min-h-[100dvh] bg-gray-50 pb-28">
       {/* Header */}
-      <div className="bg-white px-4 py-4 flex items-center border-b border-gray-100 sticky top-0 z-10">
-        <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full hover:bg-gray-50 text-gray-700 transition-colors">
-          <ArrowLeft className="w-5 h-5" />
+      <div className="bg-white px-4 py-4 flex items-center border-b border-gray-100 sticky top-0 z-10 shadow-sm">
+        <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-full active:bg-gray-100 hover:bg-gray-50 text-gray-700 transition-colors">
+          <ArrowLeft className="w-6 h-6" />
         </button>
         <div className="ml-2 flex-1 min-w-0">
-          <div className="text-sm font-bold text-gray-900 truncate">{state.pickup.name}</div>
-          <div className="text-xs text-gray-500 truncate flex items-center">
-            to <span className="font-semibold ml-1 text-gray-700">{state.destination.name}</span>
+          <div className="text-[15px] font-bold text-gray-900 truncate leading-tight">{state.pickup.name}</div>
+          <div className="text-xs text-gray-500 truncate flex items-center mt-0.5 font-medium">
+            to <span className="font-semibold ml-1 text-gray-700 truncate">{state.destination.name}</span>
           </div>
         </div>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-6">
+      <div className="p-5 space-y-6">
         {/* Main Result Card */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 text-center">
-          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Fair Fare</h2>
+        <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 text-center flex flex-col items-center">
+          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Fair Fare</h2>
           
           {!data?.hasData ? (
-            <div className="py-6">
-              <div className="text-gray-900 font-bold text-lg mb-1">
+            <div className="py-8">
+              <div className="text-gray-900 font-bold text-xl mb-1">
                 {data?.status === 'INSUFFICIENT_DATA' ? 'Insufficient Data' : 'No Data'}
               </div>
-              <div className="text-gray-500 font-medium mb-4">
+              <div className="text-gray-500 font-medium text-sm px-4 mb-6 leading-relaxed">
                 {data?.status === 'INSUFFICIENT_DATA' 
                   ? `We only have ${data.reportCount} report for this route. We need more data to provide a reliable estimate.`
                   : 'We have no recent fare data for this exact route.'}
               </div>
               <button 
                 onClick={handleReportNav}
-                className="bg-primary-50 text-primary-700 font-bold py-3 px-6 rounded-xl hover:bg-primary-100 transition-colors inline-flex items-center"
+                className="bg-primary-50 text-primary-700 font-bold py-3.5 px-6 rounded-2xl active:bg-primary-100 transition-colors inline-flex items-center text-sm"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Report your fare
@@ -130,22 +130,22 @@ export default function Result() {
             </div>
           ) : (
             <>
-              <div className="text-5xl sm:text-6xl font-black text-gray-900 tracking-tight mb-4">
+              <div className="text-[3.5rem] leading-none font-black text-gray-900 tracking-tighter mb-6">
                 ₹{data.minFare}–₹{data.maxFare}
               </div>
               
-              <div className="flex items-center justify-center space-x-6 text-sm text-gray-600 font-medium bg-gray-50 py-3 rounded-2xl">
-                <div className="flex flex-col">
-                  <span className="text-gray-400 text-xs uppercase font-bold mb-0.5">Average</span>
-                  <span className="text-gray-900 font-bold text-base">₹{data.average}</span>
+              <div className="flex items-center justify-center space-x-6 text-sm text-gray-600 font-medium bg-gray-50/80 py-4 px-6 rounded-2xl w-full max-w-[280px]">
+                <div className="flex flex-col w-1/2">
+                  <span className="text-gray-400 text-[10px] uppercase font-bold mb-1 tracking-wider">Average</span>
+                  <span className="text-gray-900 font-bold text-lg leading-none">₹{data.average}</span>
                 </div>
-                <div className="w-px h-8 bg-gray-200"></div>
-                <div className="flex flex-col">
-                  <span className="text-gray-400 text-xs uppercase font-bold mb-0.5">Distance</span>
-                  <span className="text-gray-900 font-bold text-base">{data.distance} km</span>
+                <div className="w-px h-10 bg-gray-200"></div>
+                <div className="flex flex-col w-1/2">
+                  <span className="text-gray-400 text-[10px] uppercase font-bold mb-1 tracking-wider">Distance</span>
+                  <span className="text-gray-900 font-bold text-lg leading-none">{data.distance} km</span>
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-4 font-medium">Based on {data.reportCount} recent reports</p>
+              <p className="text-xs text-gray-400 mt-5 font-semibold bg-white px-3">Based on {data.reportCount} recent reports</p>
             </>
           )}
         </div>
@@ -153,14 +153,14 @@ export default function Result() {
         {/* Check Driver Price */}
         {data?.hasData && (
           <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-            <h3 className="font-bold text-gray-900 mb-4 text-lg">Driver asking how much?</h3>
-            <div className="flex space-x-3 mb-4">
+            <h3 className="font-bold text-gray-900 mb-4 text-base">Driver asking how much?</h3>
+            <div className="flex space-x-3 mb-1">
               <div className="relative flex-1">
-                <span className="absolute left-4 top-3 text-gray-500 font-bold text-lg">₹</span>
+                <span className="absolute left-4 top-3.5 text-gray-500 font-bold text-lg">₹</span>
                 <input
                   type="number"
                   pattern="[0-9]*"
-                  className="w-full bg-gray-50 border-none rounded-xl py-3 pl-8 pr-4 text-gray-900 focus:ring-2 focus:ring-primary-500 font-bold text-lg transition-all"
+                  className="w-full bg-gray-50 border-none rounded-2xl py-3.5 pl-8 pr-4 text-gray-900 focus:ring-2 focus:ring-primary-500 font-bold text-lg transition-all"
                   placeholder="0"
                   value={driverPrice}
                   onChange={(e) => {
@@ -171,7 +171,8 @@ export default function Result() {
               </div>
               <button 
                 onClick={handleCheck}
-                className="bg-gray-900 text-white font-bold px-6 rounded-xl hover:bg-gray-800 transition-colors"
+                disabled={!driverPrice}
+                className="bg-gray-900 text-white font-bold px-7 rounded-2xl active:bg-gray-800 disabled:opacity-50 transition-colors"
               >
                 Check
               </button>
@@ -179,18 +180,18 @@ export default function Result() {
 
             {/* Check Result */}
             {checkResult && (
-              <div className={`p-4 rounded-xl flex items-start border ${checkResult.type === 'good' ? 'bg-green-50 border-green-100 text-green-800' : 'bg-red-50 border-red-100 text-red-800'}`}>
+              <div className={`mt-4 p-4 rounded-2xl flex items-start border ${checkResult.type === 'good' ? 'bg-green-50 border-green-100 text-green-800' : 'bg-red-50 border-red-100 text-red-800'}`}>
                 {checkResult.type === 'good' ? (
                   <CheckCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
                 ) : (
                   <AlertTriangle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0 text-red-600" />
                 )}
-                <div>
-                  <div className="font-bold flex items-center">
+                <div className="flex-1 pt-0.5">
+                  <div className="font-bold text-[15px] leading-tight">
                     {checkResult.message}
                   </div>
                   {checkResult.type === 'bad' && (
-                    <div className="text-sm mt-1 opacity-90 font-medium">
+                    <div className="text-sm mt-1 opacity-90 font-medium leading-snug">
                       Driver's price is ₹{checkResult.diff} higher than usual.
                     </div>
                   )}
@@ -202,14 +203,14 @@ export default function Result() {
 
         {/* Recent Reports */}
         {data?.hasData && data.recentReports?.length > 0 && (
-          <div>
-            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3 px-2">Recent Reports</h3>
-            <div className="bg-white rounded-3xl p-2 shadow-sm border border-gray-100 divide-y divide-gray-50">
+          <div className="px-1">
+            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Recent Reports</h3>
+            <div className="bg-white rounded-[1.5rem] shadow-sm border border-gray-100 overflow-hidden divide-y divide-gray-50">
               {data.recentReports.map((report, idx) => (
-                <div key={idx} className="flex justify-between items-center py-3 px-4">
+                <div key={idx} className="flex justify-between items-center py-4 px-5">
                   <div className="font-bold text-gray-900 text-lg">₹{report.amount}</div>
-                  <div className="text-sm font-medium text-gray-400 flex items-center">
-                    <Clock className="w-3.5 h-3.5 mr-1.5" />
+                  <div className="text-xs font-semibold text-gray-400 flex items-center bg-gray-50 px-2.5 py-1 rounded-full">
+                    <Clock className="w-3.5 h-3.5 mr-1" />
                     {report.timeAgo < 60 ? `${report.timeAgo} min ago` : `${Math.round(report.timeAgo / 60)} hr ago`}
                   </div>
                 </div>
@@ -221,10 +222,10 @@ export default function Result() {
 
       {/* Floating Action Button for reporting */}
       {data?.hasData && (
-        <div className="fixed bottom-6 left-0 right-0 px-4 sm:max-w-md sm:mx-auto">
+        <div className="fixed bottom-6 left-4 right-4 sm:max-w-[358px] sm:mx-auto">
           <button 
             onClick={handleReportNav}
-            className="w-full bg-primary-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-primary-700 transition-colors flex items-center justify-center text-lg active:scale-[0.98]"
+            className="w-full bg-primary-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-primary-600/20 active:scale-[0.98] transition-transform flex items-center justify-center text-lg"
           >
             Report Actual Fare
           </button>
