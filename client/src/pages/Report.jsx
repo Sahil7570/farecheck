@@ -36,7 +36,10 @@ export default function Report() {
       });
       setSuccess(true);
       setTimeout(() => {
-        navigate('/', { replace: true });
+        navigate('/result', { 
+          replace: true, 
+          state: { pickup: state.pickup, destination: state.destination } 
+        });
       }, 2000);
     } catch (err) {
       setError('Failed to report fare. Please try again.');
